@@ -69,11 +69,10 @@ def ingest_kaggle_dataset(dataset_name, output_folder, timestamp):
         logging.error(f"Failed to ingest Kaggle dataset: {e}")
         raise CustomException(e, sys)
 
-# Main function to run the ingestion process
+# Main function to run the ingestion process and store raw data in local folder
 def run_data_ingestion(timestamp):
+
     # Define output folder for raw data
-    output_folder = ".././data/raw"
-    os.makedirs(output_folder, exist_ok=True)
     local_file_output_folder = ".././data/raw/local dataset"
     os.makedirs(local_file_output_folder, exist_ok=True)
     kaggle_file_output_folder = ".././data/raw/kaggle dataset"

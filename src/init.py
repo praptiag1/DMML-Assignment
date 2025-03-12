@@ -2,13 +2,24 @@ from logger import logging
 import sys
 from exception import CustomException
 from ingestion.data_ingestion import run_data_ingestion
+from validation.data_validation import run_data_validation
+from preparation.data_preparation import run_data_preparation
 from datetime import datetime
 
 if __name__=="__main__":
     timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     logging.info("The execution has started")
     try:
+        logging.info("Data Ingestion and storing Raw data storage")
         data_ingestion=run_data_ingestion(timestamp)
+
+        logging.info("Data Validation started")
+        run_data_validation(timestamp)
+
+        logging.info("Starting data preparation...")
+        run_data_preparation(timestamp)
+        
+        print("Pipeline execution completed.")
 
 
 

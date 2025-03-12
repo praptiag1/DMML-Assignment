@@ -18,6 +18,7 @@ def ingest_local_csv(file_path, output_folder, timestamp):
         
         logging.info(f"Successfully ingested local CSV file: {output_file}")
         print(f"Local CSV data saved to: {output_file}")
+        return output_file
     except Exception as e:
         logging.error(f"Failed to ingest local CSV file: {e}")
         raise CustomException(e, sys)
@@ -62,9 +63,10 @@ def ingest_kaggle_dataset(dataset_name, output_folder, timestamp):
 
         # Clean up temp folder
         os.rmdir(temp_folder)
-        
+
         logging.info(f"Successfully ingested Kaggle dataset: {dataset_name}")
         print(f"Kaggle dataset saved to: {output_folder}")
+        return final_file_path
     except Exception as e:
         logging.error(f"Failed to ingest Kaggle dataset: {e}")
         raise CustomException(e, sys)
@@ -73,15 +75,39 @@ def ingest_kaggle_dataset(dataset_name, output_folder, timestamp):
 def run_data_ingestion(timestamp):
 
     # Define output folder for raw data
-    local_file_output_folder = ".././data/raw/local dataset"
+    raw_data_folder = ".././data/raw"
+
+    local_file_output_folder = os.path.join(raw_data_folder,"local dataset")
     os.makedirs(local_file_output_folder, exist_ok=True)
-    kaggle_file_output_folder = ".././data/raw/kaggle dataset"
+    kaggle_file_output_folder = os.path.join(raw_data_folder,"kaggle dataset")
     os.makedirs(kaggle_file_output_folder, exist_ok=True)
     
     # Ingest local CSV file
     local_csv_path = ".././data/Telco-customer-churn.csv"  # Replace with your local CSV file path
-    ingest_local_csv(local_csv_path, local_file_output_folder, timestamp)
+    local_csv_file_path = ingest_local_csv(local_csv_path, local_file_output_folder, timestamp)
     
     # Ingest Kaggle dataset 
     kaggle_dataset = "praptiag/telco-churn-dataset"  # Replace with your Kaggle dataset name
-    ingest_kaggle_dataset(kaggle_dataset, kaggle_file_output_folder, timestamp)
+    kaggle_csv_file_path = ingest_kaggle_dataset(kaggle_dataset, kaggle_file_output_folder, timestamp)
+    try:
+        # Combined both raw dataframes
+        local_df = pd.read_csv(local_csv_file_path)
+        kaggle_df = pd.read_csv(kaggle_csv_file_path)
+
+        combined_dataset = pd.concat([local_df, kaggle_df], ignore_index=True)
+        # Save combined dataset with timestamp
+        combined_file_path = os.path.join(raw_data_folder, f"customer_churn_{timestamp}.csv")
+        combined_dataset.to_csv(combined_file_path, index=False)
+        
+        logging.info(f"Customer Churn dataset saved to: {combined_file_path}")
+        print(f"Customer Churn raw dataset saved to: {combined_file_path}")
+
+        # # Remove the individual local and Kaggle dataset files
+        # os.remove(local_csv_file_path)
+        # os.remove(kaggle_csv_file_path)
+        
+        # logging.info("Removed individual local and Kaggle dataset files.")
+        # print("Removed individual local and Kaggle dataset files.")
+    except Exception as e:
+        logging.error(f"Failed to save raw dataset: {e}")
+        raise CustomException(e, sys)

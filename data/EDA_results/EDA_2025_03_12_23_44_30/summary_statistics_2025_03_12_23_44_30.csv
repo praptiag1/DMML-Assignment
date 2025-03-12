@@ -1,0 +1,22 @@
+,count,unique,top,freq,mean,std,min,25%,50%,75%,max
+gender,7032,2,Male,3549,,,,,,,
+SeniorCitizen,7032.0,,,,0.16240045506257111,0.3688439967571051,0.0,0.0,0.0,0.0,1.0
+Partner,7032,2,No,3639,,,,,,,
+Dependents,7032,2,No,4933,,,,,,,
+tenure,7032.0,,,,32.421786120591584,24.545259709263256,1.0,9.0,29.0,55.0,72.0
+PhoneService,7032,2,Yes,6352,,,,,,,
+MultipleLines,7032,3,No,3385,,,,,,,
+InternetService,7032,3,Fiber optic,3096,,,,,,,
+OnlineSecurity,7032,3,No,3497,,,,,,,
+OnlineBackup,7032,3,No,3087,,,,,,,
+DeviceProtection,7032,3,No,3094,,,,,,,
+TechSupport,7032,3,No,3472,,,,,,,
+StreamingTV,7032,3,No,2809,,,,,,,
+StreamingMovies,7032,3,No,2781,,,,,,,
+Contract,7032,3,Month-to-month,3875,,,,,,,
+PaperlessBilling,7032,2,Yes,4168,,,,,,,
+PaymentMethod,7032,4,Electronic check,2365,,,,,,,
+MonthlyCharges,7032.0,,,,64.79820819112628,30.085973884049842,18.25,35.5875,70.35,89.8625,118.75
+TotalCharges,7032.0,,,,2283.300440841866,2266.771361883145,18.8,401.45,1397.475,3794.7375,8684.8
+Churn,7032.0,,,,0.26578498293515357,0.44178171135255495,0.0,0.0,0.0,1.0,1.0
+MonthlyCharges_Category,7032.0,3.0,2.0,3581.0,,,,,,,

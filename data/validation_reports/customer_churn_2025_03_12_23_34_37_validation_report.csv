@@ -1,0 +1,6 @@
+,0
+Dataset,customer_churn_2025_03_12_23_34_37
+Missing Values,"{'customerID': 0, 'gender': 0, 'SeniorCitizen': 0, 'Partner': 0, 'Dependents': 0, 'tenure': 0, 'PhoneService': 0, 'MultipleLines': 0, 'InternetService': 0, 'OnlineSecurity': 0, 'OnlineBackup': 0, 'DeviceProtection': 0, 'TechSupport': 0, 'StreamingTV': 0, 'StreamingMovies': 0, 'Contract': 0, 'PaperlessBilling': 0, 'PaymentMethod': 0, 'MonthlyCharges': 0, 'TotalCharges': 0, 'Churn': 0}"
+Data Types,"{'customerID': dtype('O'), 'gender': dtype('O'), 'SeniorCitizen': dtype('int64'), 'Partner': dtype('O'), 'Dependents': dtype('O'), 'tenure': dtype('int64'), 'PhoneService': dtype('O'), 'MultipleLines': dtype('O'), 'InternetService': dtype('O'), 'OnlineSecurity': dtype('O'), 'OnlineBackup': dtype('O'), 'DeviceProtection': dtype('O'), 'TechSupport': dtype('O'), 'StreamingTV': dtype('O'), 'StreamingMovies': dtype('O'), 'Contract': dtype('O'), 'PaperlessBilling': dtype('O'), 'PaymentMethod': dtype('O'), 'MonthlyCharges': dtype('float64'), 'TotalCharges': dtype('O'), 'Churn': dtype('O')}"
+Duplicates,False
+Anomalies,{}

@@ -1,0 +1,6 @@
+,0
+Dataset,customer_churn_2025_03_13_12_55_54
+Missing Values,{}
+Data Types,"{'customerID': dtype('O'), 'gender': dtype('O'), 'SeniorCitizen': dtype('int64'), 'Partner': dtype('O'), 'Dependents': dtype('O'), 'tenure': dtype('int64'), 'PhoneService': dtype('O'), 'MultipleLines': dtype('O'), 'InternetService': dtype('O'), 'OnlineSecurity': dtype('O'), 'OnlineBackup': dtype('O'), 'DeviceProtection': dtype('O'), 'TechSupport': dtype('O'), 'StreamingTV': dtype('O'), 'StreamingMovies': dtype('O'), 'Contract': dtype('O'), 'PaperlessBilling': dtype('O'), 'PaymentMethod': dtype('O'), 'MonthlyCharges': dtype('float64'), 'TotalCharges': dtype('O'), 'Churn': dtype('O')}"
+Duplicates,False
+Anomalies,{}

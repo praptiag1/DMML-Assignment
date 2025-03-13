@@ -1,9 +1,10 @@
 from logger import logging
 import sys
 from exception import CustomException
-from ingestion.data_ingestion import run_data_ingestion
-from validation.data_validation import run_data_validation
-from preparation.data_preparation import run_data_preparation
+from data_ingestion import run_data_ingestion
+from data_validation import run_data_validation
+from data_preparation import run_data_preparation
+from data_transformation import run_data_transformation
 from datetime import datetime
 
 if __name__=="__main__":
@@ -16,8 +17,8 @@ if __name__=="__main__":
         logging.info("Data Validation started")
         run_data_validation(timestamp)
 
-        logging.info("Starting data preparation...")
-        run_data_preparation(timestamp)
+        logging.info("Data Preparation and Transformation Started")
+        transformed_data = run_data_transformation(timestamp)
         
         print("Pipeline execution completed.")
 

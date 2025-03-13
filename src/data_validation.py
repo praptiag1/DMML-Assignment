@@ -21,8 +21,10 @@ def validate_dataset(dataset_path, report_folder, dataset_name):
         }
         
         # Check for missing values
-        missing_values = df.isnull().sum()
-        validation_results["Missing Values"] = missing_values.to_dict()
+        if df.isnull().sum().any():
+            validation_results["Missing Values"] = df.isnull().sum().to_dict()
+            logging.warning("Missing values detected in the dataset.")
+
         
         # Validate data types
         data_types = df.dtypes
@@ -30,13 +32,17 @@ def validate_dataset(dataset_path, report_folder, dataset_name):
         
         # Check for duplicates
         duplicates = df.duplicated().any()
-        validation_results["Duplicates"] = duplicates
+        if duplicates:
+            validation_results["Duplicates"] = duplicates
+            logging.warning("Duplicate rows detected in the dataset.")
+
         
         # Check for anomalies (e.g., negative values in numeric columns)
         anomalies = {}
         for col in df.select_dtypes(include=['float64', 'int64']).columns:
             if (df[col] < 0).any():
                 anomalies[col] = "Negative values found"
+                logging.warning("Negative values found.")
         validation_results["Anomalies"] = anomalies
         
         # Save validation results to a report

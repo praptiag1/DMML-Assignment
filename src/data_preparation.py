@@ -6,13 +6,13 @@ import seaborn as sns
 import numpy as np
 from logger import logging
 from exception import CustomException
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from datetime import datetime
 import matplotlib
 matplotlib.use('Agg')  # Use a non-interactive backend
 
 # Function to perform EDA
-def perform_eda(df, eda_folder, timestamp):
+def perform_eda(df, eda_folder, timestamp, numerical_cols, categorical_cols):
     try:
         # Generate summary statistics
         summary_stats = df.describe(include='all').transpose()
@@ -139,19 +139,25 @@ def prepare_data(raw_data_folder, clean_data_folder, eda_folder, timestamp):
         combined_data[["tenure","MonthlyCharges","TotalCharges"]] = scaler.fit_transform(combined_data[["tenure","MonthlyCharges","TotalCharges"]])
         
         # Encode categorical variables
-        encoder = OneHotEncoder(drop='first', sparse_output=False)  # Use sparse_output=False for dense array
+        le = LabelEncoder() 
         categorical_cols = combined_data.select_dtypes(include=['object']).columns
         
         # Encode categorical columns
         if len(categorical_cols) > 0:
-            encoded_cols = encoder.fit_transform(combined_data[categorical_cols])
-            encoded_df = pd.DataFrame(encoded_cols, columns=encoder.get_feature_names_out(categorical_cols))
+            encoded_cols = le.fit_transform(combined_data[categorical_cols])
+            encoded_df = pd.DataFrame(encoded_cols, columns=le.get_feature_names_out(categorical_cols))
             
             # Combine numerical and encoded categorical data
             combined_data = pd.concat([combined_data.drop(categorical_cols, axis=1), encoded_df], axis=1)
         else:
             logging.info("No categorical columns to encode.")
-        
+
+        # Find Correlation between variables
+        corr_df = combined_data[combined_data.columns[0:]].corr()['Churn'][:]
+        corr_df = np.abs(corr_df).sort_values(ascending=False)[1:6]
+        correlation_file = os.path.join(eda_folder, f"correlation_{timestamp}.csv")
+        corr_df.to_csv(correlation_file, index=False)
+
         # Save the cleaned dataset
         clean_data_file = os.path.join(clean_data_folder, f"clean_dataset_{timestamp}.csv")
         combined_data.to_csv(clean_data_file, index=False)
@@ -174,7 +180,7 @@ def run_data_preparation(timestamp):
     csv_file = os.path.join(raw_data_folder, f"customer_churn_{timestamp}.csv")
     if os.path.exists(csv_file):
         # Run data preparation
-        prepare_data(csv_file, clean_data_folder, eda_data_folder, timestamp)
+        return prepare_data(csv_file, clean_data_folder, eda_data_folder, timestamp)
 
 # if __name__ == "__main__":
 #     # For standalone execution (optional)
